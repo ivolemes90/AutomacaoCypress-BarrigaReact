@@ -1,0 +1,4 @@
+{
+    "error": "Já existe uma conta com esse nome!",
+    "statusCode": 400
+}

@@ -35,8 +35,8 @@ Cypress.Commands.add('clickAlert', (locator, message) => {
 
 Cypress.Commands.add('login', (user, passwd) => {
     cy.visit('https://barrigareact.wcaquino.me')
-    cy.get(loc.LOGIN.USER).type('ivo@gmail.com')
-    cy.get(loc.LOGIN.PASSWORD).type('ivo@123')
+    cy.get(loc.LOGIN.USER).type(user)
+    cy.get(loc.LOGIN.PASSWORD).type(passwd)
     cy.get(loc.LOGIN.BTN_LOGIN).click()
     cy.get(loc.MESSAGE).should('contain', 'Bem vindo')
 
@@ -48,7 +48,7 @@ Cypress.Commands.add('resetApp', () => {
 })
 
 Cypress.Commands.add('getToken', (user, passwd) => {
-        cy.request({
+    cy.request({
         method: 'POST',
         url: '/signin',
         body: {
@@ -57,9 +57,9 @@ Cypress.Commands.add('getToken', (user, passwd) => {
             senha: passwd
         }
     }).its('body.token').should('not.be.empty')
-    .then(token => {
-        return token
-    })
+        .then(token => {
+            return token
+        })
 })
 
 Cypress.Commands.add('resetRest', () => {
@@ -67,7 +67,7 @@ Cypress.Commands.add('resetRest', () => {
         cy.request({
             method: 'GET',
             url: '/reset',
-            headers: { Authorization: `JWT ${token}`},
+            headers: { Authorization: `JWT ${token}` },
         })
     }).its('status').should('be.equal', 200)
 })
@@ -77,11 +77,11 @@ Cypress.Commands.add('getContaByName', name => {
         cy.request({
             method: 'GET',
             url: '/contas',
-            headers: { Authorization: `JWT ${token}`},
+            headers: { Authorization: `JWT ${token}` },
             qs: {
                 nome: name
             }
-        }).then(res  => {
+        }).then(res => {
             return res.body[0].id
         })
     })
@@ -94,4 +94,12 @@ Cypress.Commands.add('dateNow', () => {
     const year = String(now.getFullYear())
     const dateNow = `${day}/${month}/${year}`
     return dateNow
+})
+
+Cypress.Commands.add('buildEnv', () => {
+    cy.intercept('POST', '/signin', { fixture: 'signin.json' }).as('signin')
+
+    cy.intercept('GET', '/saldo', { fixture: 'saldo.json' }).as('saldo')
+
+    cy.intercept('GET', '/contas', { fixture: 'contas.json' }).as('contas')
 })

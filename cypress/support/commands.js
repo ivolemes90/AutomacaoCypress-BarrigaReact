@@ -71,3 +71,27 @@ Cypress.Commands.add('resetRest', () => {
         })
     }).its('status').should('be.equal', 200)
 })
+
+Cypress.Commands.add('getContaByName', name => {
+    cy.getToken('ivo@gmail.com', 'ivo@123').then(token => {
+        cy.request({
+            method: 'GET',
+            url: '/contas',
+            headers: { Authorization: `JWT ${token}`},
+            qs: {
+                nome: name
+            }
+        }).then(res  => {
+            return res.body[0].id
+        })
+    })
+})
+
+Cypress.Commands.add('dateNow', () => {
+    const now = new Date()
+    const day = String(now.getDate()).padStart(2, '0')
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    const year = String(now.getFullYear())
+    const dateNow = `${day}/${month}/${year}`
+    return dateNow
+})

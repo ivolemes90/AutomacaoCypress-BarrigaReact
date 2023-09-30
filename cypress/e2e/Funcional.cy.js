@@ -1,7 +1,7 @@
 ///<reference types="cypress"/>
 
 /*
-Senáirios de testes funcionais:
+Senários de testes funcionais:
 1 Inserir conta
 2 Alterar conta
 3 Inserir conta repetida

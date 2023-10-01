@@ -102,4 +102,6 @@ Cypress.Commands.add('buildEnv', () => {
     cy.intercept('GET', '/saldo', { fixture: 'saldo.json' }).as('saldo')
 
     cy.intercept('GET', '/contas', { fixture: 'contas.json' }).as('contas')
+
+    cy.intercept('GET', '/extrato/**', { fixture: 'extrato.json' }).as('extrato')
 })

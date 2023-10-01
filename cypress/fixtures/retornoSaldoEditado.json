@@ -1,0 +1,12 @@
+[
+    {
+        "conta_id": 999,
+        "conta": "Carteira",
+        "saldo": "4034.00"
+    },
+    {
+        "conta_id": 9909,
+        "conta": "Banco",
+        "saldo": "20000000.00"
+    }
+]
